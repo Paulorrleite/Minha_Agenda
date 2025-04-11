@@ -11,11 +11,11 @@ namespace MinhaAgenda.Plugins.DadosEmMemoria
         {
             _contatos = new List<Contato>()
             {
-                new Contato("João","111-111-1111", "João@teste.com","endereço 1" ),
-                new Contato("Lucas","222-111-1111", "Lucas@teste.com","endereço 2" ),
-                new Contato("Paulo","333-111-1111", "Paulo@teste.com","endereço 3" ),
-                new Contato("Mateus","4444-111-1111", "Mateus@teste.com","endereço 4" ),
-                new Contato("Leonardo","111-111-1111", "Leonardo@teste.com","endereço 5" ),
+                new Contato("João","111-111-1111", "João@teste.com","endereço 1","Observação do João" ),
+                new Contato("Lucas","222-111-1111", "Lucas@teste.com","endereço 2", "Observação do Lucas" ),
+                new Contato("Paulo","333-111-1111", "Paulo@teste.com","endereço 3", "Observação do Paulo" ),
+                new Contato("Mateus","4444-111-1111", "Mateus@teste.com","endereço 4", "Observação do Mateus" ),
+                new Contato("Leonardo","111-111-1111", "Leonardo@teste.com","endereço 5", "Observação do Leonardo" ),
             };
         }
         public Task AdicionarContato(Contato contato)
@@ -41,6 +41,7 @@ namespace MinhaAgenda.Plugins.DadosEmMemoria
                 contatoAtualizar.Fone = contato.Fone;
                 contatoAtualizar.Email = contato.Email;
                 contatoAtualizar.Endereco = contato.Endereco;
+                contatoAtualizar.Observacao = contato.Observacao;
             }
             return Task.CompletedTask;
         }
@@ -54,6 +55,7 @@ namespace MinhaAgenda.Plugins.DadosEmMemoria
                 contatoAtualizar.Fone = contato.Fone;
                 contatoAtualizar.Email = contato.Email;
                 contatoAtualizar.Endereco = contato.Endereco;
+                contatoAtualizar.Observacao = contato.Observacao;
             }
             return Task.CompletedTask;
         }
@@ -74,8 +76,9 @@ namespace MinhaAgenda.Plugins.DadosEmMemoria
             var contatosPorFone = _contatos.Where(x => !string.IsNullOrWhiteSpace(x.Fone) && x.Fone.Contains(filtro, StringComparison.OrdinalIgnoreCase)).ToList();
             var contatosPorEmail = _contatos.Where(x => !string.IsNullOrWhiteSpace(x.Email) && x.Email.Contains(filtro, StringComparison.OrdinalIgnoreCase)).ToList();
             var contatosPorEndereco = _contatos.Where(x => !string.IsNullOrWhiteSpace(x.Endereco) && x.Endereco.Contains(filtro, StringComparison.OrdinalIgnoreCase)).ToList();
+            var contatosPorObservacao = _contatos.Where(x => !string.IsNullOrWhiteSpace(x.Observacao) && x.Observacao.Contains(filtro, StringComparison.OrdinalIgnoreCase)).ToList();
                         
-            return Task.FromResult(contatosPorNome.Union(contatosPorFone).Union(contatosPorEmail).Union(contatosPorEndereco).ToList());
+            return Task.FromResult(contatosPorNome.Union(contatosPorFone).Union(contatosPorEmail).Union(contatosPorEndereco).Union(contatosPorObservacao).ToList());
         }
 
         public Task<List<Contato>> BuscarTodosContatos()
